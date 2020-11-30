@@ -1,0 +1,262 @@
+<html>
+<head>
+	
+	<title>DEFORESTATION</title>
+
+
+	<link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" media="screen" title="leaflet">
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js" charset="utf-8"></script>
+    
+ 
+
+
+    <style>
+        #map_symb_1{
+            background: #fff;
+            width: 70%;
+            height: 100vh;
+            background-color:white
+        }
+        #Texte{position: absolute; top: 0%; right: 0px; width: 30%; height: 10%;}
+        #container1{position: absolute; top: 10%; right: 0px; width: 30%; height: 45%; }
+        #container2{position: absolute; top: 55%; right: 0px; width: 30%; height: 45%;}
+
+        .info_sym {
+            padding: 5px 5px;
+            font: 13px/24px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,8);
+            box-shadow: 0 0 10px rgb(85, 168, 244);
+            border-radius: 3px;
+        }
+        .info_sym h4 {
+            margin: 0 0 1px;
+            color: #4895f2;
+        }
+        .legend_sym {
+            line-height: 20px;
+            color: #555;
+        }
+        .legend_sym i {
+            width: 50px;
+            height:18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 1;
+        }
+        
+
+         #circle {
+      width: 50px;
+      height: 50px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 25px;
+      background: red;
+    }
+    </style>
+</head>
+<body>
+	
+     <div>
+  <center>
+<div id='map_symb_1'></div>
+  </center>
+
+<script type="text/javascript" src="symb_1_data.geojson"></script>
+
+<script type="text/javascript">
+
+// <script>
+	var map_symb_1 = L.map('map_symb_1').setView([34.067764, -6.620503], 5);
+
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetmap</a> contributors'
+}).addTo(map_symb_1);
+
+	var baseballIcon = L.icon({
+		iconUrl: 'baseball-marker.png',
+		iconSize: [32, 37],
+		iconAnchor: [16, 37],
+		popupAnchor: [0, -28]
+	});
+
+</script> 
+
+<script type="text/javascript" src="symb_1_data.geojson"></script>
+
+<script type="text/javascript">
+    var info_sym = L.control();
+
+			info_sym.onAdd = function (map_symb_1) {
+				this._div = L.DomUtil.create('div', 'info_sym');
+				this.update();
+				return this._div;
+			};
+
+			info_sym.update = function (props) {
+				this._div.innerHTML = '<h4 style="color:#2E3513!important;">Indice de déforestation ISDD</h4>' +  (props ?
+					'<b>' +  ' Region : ' + props.NAME_0 + '</b><br />'
+					: 'Glissez la souris sur une region de afrique de nord');
+			};
+
+			info_sym.addTo(map_symb_1);
+
+    function getColor(d) {
+    return d ? '#bdd7e7' :
+          
+           
+                      '#bdd7e7';
+}
+
+	
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: 'white',
+			dashArray: '3',
+			fillOpacity: 0.7,
+			fillColor: getColor(feature.properties.deforestation)
+		};
+	}
+
+	var geojson = L.geoJson(mes, {
+		style: style,
+	}).addTo(map_symb_1);
+
+
+
+
+function style(feature) {
+				return {
+					weight: 1,
+					opacity: 1,
+					color: 'white',
+					dashArray: '0',
+					fillOpacity: 1,
+					fillColor: getColor(feature.properties.deforestation)
+				};
+			}
+
+
+			function highlightFeature(e) {
+				var layer = e.target;
+
+				layer.setStyle({
+					weight: 2,
+					color: '#666',
+					dashArray: '',
+					fillOpacity: 0.9
+				});
+
+				info_sym.update(layer.feature.properties);
+			}
+
+			var geojson;
+
+			function resetHighlight(e) {
+				geojson.resetStyle(e.target);
+				info_sym.update();
+			}
+
+			function zoomToFeature(e) {
+				map_symb_1.fitBounds(e.target.getBounds());
+			}
+
+			function onEachFeature(feature, layer) {
+				layer.on({
+					mouseover: highlightFeature,
+					mouseout: resetHighlight,
+					click: zoomToFeature
+				});
+			}
+
+			geojson = L.geoJson(mes, {
+				style: style,
+				onEachFeature: onEachFeature
+			}).addTo(map_symb_1);
+
+			map_symb_1.attributionControl.addAttribution('INSEE');
+
+            var scale = L.control.scale().addTo(map_symb_1)
+			var legend_sym = L.control({position: 'bottomright'});
+
+			legend_sym.onAdd = function (map_symb_1) {
+				var div = L.DomUtil.create('div', 'info_sym legend_sym'),
+					labels = ["ISDD"],
+					colors = ["#43a2ca"],
+					from, to;				
+
+                div.innerHTML=" <b>Indice de déforestation (AFRIQUE_NORD) : </b><br>"
+
+				for (var i = 0; i < labels.length; i++) {
+                div.innerHTML +=
+                '<i style="background:' + colors[i] + '"></i> ' +
+                    labels[i] + '<br>';
+                
+   				}
+
+				return div;
+			};
+
+			legend_sym.addTo(map_symb_1);
+
+			var dataRegion1 =
+            [
+                {  "name": "TANGER-TETOUAN-AL HOCEIMA", "Population": 10,  "coordinates": [35.312535, -5.207081]},
+                {  "name": "ORIENTAL-RIF", "Population": 9, "coordinates": [33.938266, -2.560731]},
+                {  "name": "FES-MEKNES", "Population": 8,  "coordinates": [33.648909, -4.653489]},
+                {  "name": "RABAT-SALE-KENITRA", "Population": 12.1, "coordinates": [33.940238, -6.754571]},
+                {  "name": "BENI MELLAL-KHENIFRA", "Population": 5.4, "coordinates": [32.537988, -6.257502]},
+                {  "name": "MARRAKECH-SAFI", "Population": 9.7,  "coordinates": [31.759959, -8.486758]},
+                {  "name": "DRAA-TAFILALET", "Population": 7.8, "coordinates": [31.256280, -5.219849]},
+                {  "name": "SOUSS-MASSA", "Population": 5.6, "coordinates": [29.940318, -8.590595]},
+                {  "name": "GUELMIM-OUED NOUN", "Population": 3.6, "coordinates": [28.507072, -10.050568]},
+                {  "name": "LAAYOUNE-BOUJDOUR-SAKIA AL HAMRA", "Population": 3.9, "coordinates": [27.911595, -12.295261]},
+                {  "name": "ED DAKHLA-OUED EDDAHAB", "Population": 3.8,  "coordinates": [23.567869, -14.382157]},
+                {  "name": "CASABLANCA-SETTAT", "Population": 1, "coordinates": [33.115998, -7.877881]}
+
+                
+            ]
+
+            var center = [23.567869, -14.382157];
+
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map_symb_1);
+
+      
+
+          L.circle([35.312535, -5.207081], {radius: 20000}).addTo(map_symb_1);
+         L.circle([33.938266, -2.560731], {radius: 32500}).addTo(map_symb_1);
+          L.circle([33.648909, -4.653489], {radius: 25000}).addTo(map_symb_1);
+         L.circle([33.940238, -6.754571], {radius: 22500}).addTo(map_symb_1);
+         L.circle([32.537988, -6.257502], {radius: 30000}).addTo(map_symb_1);
+
+          L.circle([31.759959, -8.486758], {radius: 32500}).addTo(map_symb_1);
+
+           L.circle([31.256280, -5.219849], {radius: 35000}).addTo(map_symb_1);
+            L.circle([29.940318, -8.590595], {radius: 42500}).addTo(map_symb_1);
+
+            L.circle([28.507072, -10.050568], {radius: 42500}).addTo(map_symb_1);
+
+              L.circle([27.911595, -12.295261], {radius: 45000}).addTo(map_symb_1);
+               L.circle([23.567869, -14.382157], {radius: 50000}).addTo(map_symb_1);
+               L.circle([33.115998, -7.877881], {radius: 22500}).addTo(map_symb_1);
+
+               L.circle([28.88, 2.09], {radius: 32500}).addTo(map_symb_1);
+              L.circle([33.93, 9.25], {radius: 30000}).addTo(map_symb_1);
+               L.circle([27.35, 17.41], {radius: 40000}).addTo(map_symb_1);
+
+               L.circle([20.24, -10.60], {radius: 65000}).addTo(map_symb_1);
+
+               L.circle([26.61, 29.09], {radius: 42500}).addTo(map_symb_1);
+
+
+ 
+</script> 
+
+</body>
+</html>

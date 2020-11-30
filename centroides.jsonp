@@ -1,0 +1,35 @@
+onLoadDaata({
+"type": "FeatureCollection",
+"name": "centroides",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+
+{ "type": "Feature", "properties": { "NAME": "Algeria", "GMI_CNTRY": "DZA", "REGION": "NorthAfrica", "n_inc" :13010 , "Defor": 10912, "start": "01-01-2015", "end": "01-01-2016" }, "geometry": { "type": "Point", "coordinates": [ 2.63166919462299, 28.162580567788204 ] } },
+
+
+{ "type": "Feature", "properties": { "NAME": "Morocco", "GMI_CNTRY": "MRC", "REGION": "NorthAfrica", "n_inc" : 992, "Defor": 1689, "start": "01-01-2015", "end": "01-01-2016" }, "geometry": { "type": "Point", "coordinates": [ -8.934846873541614, 29.113020585050805 ] } },
+
+
+{ "type": "Feature", "properties": { "NAME": "Algeria", "GMI_CNTRY": "DZA", "REGION": "NorthAfrica", "n_inc": 18370, "Defor": 6926, "start": "01-01-2016", "end": "01-01-2017" }, "geometry": { "type": "Point", "coordinates": [ 2.63166919462299, 28.162580567788204 ] } },
+
+
+{ "type": "Feature", "properties": { "NAME": "Morocco", "GMI_CNTRY": "MRC", "REGION": "NorthAfrica", "n_inc": 2585, "Defor": 835, "start": "01-01-2016", "end": "01-01-2017" }, "geometry": { "type": "Point", "coordinates": [ -8.934846873541614, 29.113020585050805 ] } },
+
+
+{ "type": "Feature", "properties": { "NAME": "Algeria", "GMI_CNTRY": "DZA", "REGION": "NorthAfrica", "n_inc" : 53975, "Defor": 9532, "start": "01-01-2017", "end": "01-01-2018" }, "geometry": { "type": "Point", "coordinates": [ 2.63166919462299, 28.162580567788204 ] } },
+
+
+{ "type": "Feature", "properties": { "NAME": "Morocco", "GMI_CNTRY": "MRC", "REGION": "NorthAfrica", "n_inc":2414, "Defor": 1689, "start": "01-01-2017", "end": "01-01-2018" }, "geometry": { "type": "Point", "coordinates": [ -8.934846873541614, 29.113020585050805 ] } },
+
+
+{ "type": "Feature", "properties": { "NAME": "Algeria", "GMI_CNTRY": "DZA", "REGION": "NorthAfrica", "n_inc" : 2312, "Defor": 5706, "start": "01-01-2018", "end": "01-01-2019" }, "geometry": { "type": "Point", "coordinates": [ 2.63166919462299, 28.162580567788204 ] } },
+
+{ "type": "Feature", "properties": { "NAME": "Morocco", "GMI_CNTRY": "MRC", "REGION": "NorthAfrica", "n_inc" : 841, "Defor": 951, "start": "01-01-2018", "end": "01-01-2019" }, "geometry": { "type": "Point", "coordinates": [ -8.934846873541614, 29.113020585050805 ] } },
+
+
+
+
+
+]
+});
+

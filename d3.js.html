@@ -1,0 +1,661 @@
+
+<html>
+<head>
+   <meta charset="UTF-8">  
+        <title>Line chart using D3.js and Dimple.js</title>  
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="./leaflet.timeline.js"></script>
+    <link rel="stylesheet" href="leaflet.css" />
+  <meta charset="utf-8" />
+  <title>Extrude polygons for 3D indoor mapping</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="leaflet.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>N & LW Lawn Care - Landscaping Bootstrap4 HTML5 Responsive Template </title>
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fontawesome CSS -->
+  <link href="css/all.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet">
+  <script src="./leaflet.timeline.js"></script>
+    <script src="./test1.jsonp"></script>
+<link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/d3.v2.min.js"></script>
+
+   <style>
+      
+     #map_choro_1{
+      width: 900;
+      height: 500;
+      position : relative;
+      margin-right:  auto;
+      margin-left: auto }
+        #Texte{position: absolute; top: 0%; right: 0px; width: 30%; height: 10%;}
+        #container1{position: absolute; top: 10%; right: 0px; width: 30%; height: 45%; }
+        #container2{position: absolute; top: 55%; right: 0px; width: 30%; height: 45%;}
+
+        .info {
+            padding: 5px 5px;
+            font: 13px/24px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,8);
+            box-shadow: 0 0 10px rgb(85, 168, 244);
+            border-radius: 3px;
+            top  : 50;
+        }
+        .info h4 {
+            margin: 0 0 1px;
+            color: #4895f2;
+        }
+        .legend {
+            line-height: 20px;
+            color: #555;
+            top : 1;
+        }
+        .legend i {
+            width: 50px;
+            height:18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 1;
+        }
+
+        #map_choro_des {
+      width: 900;
+      height: 500;
+      position : relative;
+      margin-right:  auto;
+      margin-left: auto
+    }
+    .info_choro_dese {
+        padding: 6px 8px;
+        font: 14px/16px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+    .info_choro_dese h4 {
+        margin: 0 0 5px;
+        color: #777;
+    }
+    .legend_map_choro_des {
+    line-height: 18px;
+    color: #555;
+}
+.legend_map_choro_des i {
+    width: 17px;
+    height: 17px;
+    float: left;
+    margin-right: 10px;
+    opacity: 0.7;
+}
+table, th, td {
+  border: 1px solid black;
+}
+    </style>
+    <style type="text/css">
+    #chart text {
+        fill: black;
+        font: 10px sans-serif;
+        text-anchor: end;
+    }
+
+    .axis text {
+        font: 10px sans-serif;
+    }
+
+    .axis path, .axis line {
+        fill: none;
+        /*stroke: #fff;*/
+        shape-rendering: crispEdges;
+    }
+
+    body 
+    <h1>Basic Line Chart</h1>{
+        /*background: #1a1a1a;*/
+        color: #eaeaea;
+        padding: 10px;
+    }
+
+    path {
+        stroke: steelblue;
+        stroke-width: 2;
+        fill: none;
+    }
+</style>
+</head>
+<body>
+<!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light top-nav fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="logo" />
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fas fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link " href="Maps_dyn.html">Dynamiques</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link " href="Maps_3d.html">3D</a>
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link  " href="choro.html">Choroplèthes</a>
+                  </li>
+                  
+                     </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="symb.html">Symboles</a>
+                  </li>
+
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link active " href="d3.js.html">D3.js</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                     <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+               </ul>
+            </div>
+        </div>
+    </nav>
+
+  
+<div class="input-group">
+               <img class="card-img-top" src="images/morocco_1.jpg" alt="Card image Blog" />
+
+
+<div  style="margin-left: auto;
+          margin-right: auto;width:75%;">
+<canvas id="myChart"></canvas>
+</div>
+<script>
+
+
+Chart.defaults.global.title.display=true;
+
+Chart.defaults.global.title.text= "DEFORESTATION 2005-2013 ";
+
+
+    </script>
+
+<script>
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
+
+datasets: [{
+                    label: 'MAROC',
+                
+                    data: [8730, 7050, 5550.430, 6599.2592, 8522.95, 7620.72, 9218.12,12117.75,7946.45],
+                     borderColor: 'rgb(18, 2, 12)',
+                     backgroundColor: 'rgb(18, 2, 12)',
+        
+                    fill: false,
+                }, {
+                   
+
+
+
+
+                    label: 'ALGERIE',
+                    fill: false,
+                    
+
+                    data: [21069.140, 19388.28, 18783.49, 20581.58, 24779.08, 21146.21, 23678.96,28219.41,25960.200],
+                     borderColor: 'rgb(366, 25, 132)',
+                    backgroundColor: 'rgb(366, 25, 132)',
+       
+           },{
+                   
+
+
+
+
+                    label: 'TUNISIE',
+                    fill: false,
+                    
+
+                    data: [2863.003, 3098.515, 3754.693, 4269.405, 3928.5857, 3097.320, 4881.628,7171.105,5625.965],
+                      borderColor: 'rgb(25, 98, 32)',
+                      backgroundColor: 'rgb(25, 98, 32)',
+       
+           },{
+                   
+
+
+
+
+                    label: 'LYBIE',
+                    fill: false,
+                    
+
+                    data: [3438.079, 4000.957, 3375.2238, 4451.019, 3893.358, 4126.003, 1905.0005,4657.752,3435.659],
+                     borderColor: 'rgb(0, 255, 255)',
+                    backgroundColor: 'rgb(0, 255, 255)',
+       
+           },{
+                   
+
+
+
+
+                    label: 'EGYPTE',
+                    fill: false,
+                    
+
+                    data: [33437.6256, 43098.7122, 33077.4209, 24503.179, 12183.7403,37509.3497, 29004.3862,42300.6679, 41220.555],
+                     borderColor: 'rgb(223, 109, 20)',
+                    backgroundColor: 'rgb(223, 109, 20)',
+       
+           }]
+
+
+},
+
+
+});
+
+
+
+         </script>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+    </div>
+
+
+  <div class="container">
+
+    <h7 class="card-header" style = " background-color: transparent;bord" >Déforestation exportée entre 2005 et 2013 pour les pays du nord d'Afrique</h7>
+            <div class="card-body">
+             
+              <p class="card-text">Cette charte représente la meme data utilisé dans la carte dynamique en abordant la déforestation exportée au cours du temps
+              <p class="card-text">Pendrill et coll. (2019) ont développé un modèle d'équilibre des terres qui a attribué la perte de forêt détectée dans le monde à l'expansion des terres cultivées, des pâturages et des plantations d'arbres. Ceci est ensuite lié à des produits agricoles particuliers sur la base des statistiques nationales sur l'utilisation des terres, les cultures et les produits forestiers publiées dans les bilans de l'Organisation des Nations Unies pour l'alimentation et l'agriculture. 
+
+                 <p class="card-text"> Cette étude cartographie la déforestation intégrée dans le commerce international de ces produits en utilisant à la fois un modèle de commerce physique et un modèle MRIO (multi-régional input-output). Cela permet de quantifier la déforestation intégrée dans les produits alimentaires et forestiers importés. 
+                  <p class="card-text">Pendrill et coll. (2019) fournissent des données sur la déforestation exportée et importée. Our World in Data a en outre calculé la déforestation nette intégrée dans le commerce pour chaque pays en soustrayant les exportations des importations.
+        <div class="services-bar">
+            <h1 class="my-4">Tableau indiquant la déforestation exportée entre 2003 et 2013 dans le NA </h1>
+            <!-- Services Section -->
+            <div class="row">
+            </div>
+            <table cellspacing=0 border=1 style="height : 80%;width :94%; margin-left: auto; margin-right: auto;text-align: center; 
+    vertical-align: middle;">
+            <tr>
+            <td style=min-width:50px>Pays</td>
+            <td style=min-width:50px>Code</td>
+            <td style=min-width:50px>Année</td>
+            <td style=min-width:50px>Déforestation exportée (hectares)</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2005</td>
+            <td style=min-width:50px>3856.4628290000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2006</td>
+            <td style=min-width:50px>4245.4263110000002</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2007</td>
+            <td style=min-width:50px>4684.75378</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2008</td>
+            <td style=min-width:50px>5516.6392489999998</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2009</td>
+            <td style=min-width:50px>6740.1019189999997</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2010</td>
+            <td style=min-width:50px>6364.1770040000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2011</td>
+            <td style=min-width:50px>6952.8747839999996</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2012</td>
+            <td style=min-width:50px>8145.9815179999996</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Algeria</td>
+            <td style=min-width:50px>DZA</td>
+            <td style=min-width:50px>2013</td>
+            <td style=min-width:50px>8009.8674810000002</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2005</td>
+            <td style=min-width:50px>102.529493</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2006</td>
+            <td style=min-width:50px>79.226351280000003</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2007</td>
+            <td style=min-width:50px>86.655988840000006</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2008</td>
+            <td style=min-width:50px>91.04797198</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2009</td>
+            <td style=min-width:50px>78.370146340000005</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2010</td>
+            <td style=min-width:50px>89.471147950000002</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2011</td>
+            <td style=min-width:50px>104.1773306</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2012</td>
+            <td style=min-width:50px>191.15972640000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Egypt</td>
+            <td style=min-width:50px>EGY</td>
+            <td style=min-width:50px>2013</td>
+            <td style=min-width:50px>201.68125359999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2005</td>
+            <td style=min-width:50px>23.522296990000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2006</td>
+            <td style=min-width:50px>23.44327754</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2007</td>
+            <td style=min-width:50px>16.356501770000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2008</td>
+            <td style=min-width:50px>12.382314429999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2009</td>
+            <td style=min-width:50px>11.35720746</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2010</td>
+            <td style=min-width:50px>8.7058228809999996</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2011</td>
+            <td style=min-width:50px>7.2902899330000004</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2012</td>
+            <td style=min-width:50px>7.2627697400000004</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Libya</td>
+            <td style=min-width:50px>LBY</td>
+            <td style=min-width:50px>2013</td>
+            <td style=min-width:50px>22.806919879999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2005</td>
+            <td style=min-width:50px>2179.0859129999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2006</td>
+            <td style=min-width:50px>2251.5742749999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2007</td>
+            <td style=min-width:50px>1965.273878</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2008</td>
+            <td style=min-width:50px>2239.9775610000002</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2009</td>
+            <td style=min-width:50px>2191.1950900000002</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2010</td>
+            <td style=min-width:50px>2081.4585529999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2011</td>
+            <td style=min-width:50px>2318.8675320000002</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2012</td>
+            <td style=min-width:50px>2164.9580940000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Morocco</td>
+            <td style=min-width:50px>MAR</td>
+            <td style=min-width:50px>2013</td>
+            <td style=min-width:50px>1658.2202990000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2005</td>
+            <td style=min-width:50px>595.08711630000005</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2006</td>
+            <td style=min-width:50px>619.81403250000005</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2007</td>
+            <td style=min-width:50px>747.1145004</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2008</td>
+            <td style=min-width:50px>582.22712009999998</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2009</td>
+            <td style=min-width:50px>715.07470420000004</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2010</td>
+            <td style=min-width:50px>668.11050599999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2011</td>
+            <td style=min-width:50px>1039.1552180000001</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2012</td>
+            <td style=min-width:50px>1150.3726549999999</td>
+          </tr>
+          <tr>
+            <td style=min-width:50px>Tunisia</td>
+            <td style=min-width:50px>TUN</td>
+            <td style=min-width:50px>2013</td>
+            <td style=min-width:50px>1274.436361</td>
+          </tr>
+        </table>
+
+             
+              </div>
+<h1 class="my-4"> Pollution de l'air dans l'afrique</h1>
+
+          
+    </div>
+
+
+      
+ 
+<div class="input-group">
+               <img class="card-img-top" src="images/cercle.JPG" alt="Card image Blog" /> 
+
+
+  <div class="container">
+   <div class="card-footer">
+                        <a href="cercle.html" class="btn btn-primary">Ouvrir cette charte dans une page à part</a>
+                     </div>
+    <h7 class="card-header" style = " background-color: transparent;bord" > Description de la charte</h7>
+            <div class="card-body">
+             
+               <p class="card-text">Cette charte représente les mêmes données que la carte de la carte de symboles proportionnels de désertification.
+
+
+              <p class="card-text">L’indice SPI (Indice Standardisé des Précipitations), est un indice issu du traitement des données NOAA/AVHRR,  basé sur un historique des précipitations de longue durée qui permet de quantifier l’écart des précipitations d’une période par rapport aux précipitations moyennes historiques de la même période.
+            
+        <div class="services-bar">
+           
+            <!-- Services Section -->
+            <div class="row">
+            </div>
+
+<div class="input-group">
+               <img class="card-img-top" src="images/charte_2.JPG" alt="Card image Blog" /> 
+
+
+  <div class="container">
+   <div class="card-footer">
+                        <a href="barch.html" class="btn btn-primary">Ouvrir cette charte dans une page à part</a>
+                     </div>
+    <h7 class="card-header" style = " background-color: transparent;bord" > Descroption de la charte</h7>
+            <div class="card-body">
+             
+               <p class="card-text">Cette charte représente les mêmes données que
+
+
+              <p class="card-text">L’indice de sensibilité à la désertification est basée sur l’approche du projet MEDALUS ou Mediterranean Desertification and Land Use (CE1999), dont la formule est : 
+ISDD = (IE x IV x IC x IS)1/4
+
+C’est une combinaison de 4 facteurs : IE (Érosion) , IS (Pâturage), IV (Climat), IC(Végétation)
+
+               
+        <div class="services-bar">
+           
+            <!-- Services Section -->
+            <div class="row">
+            </div>
+
+
+
+
+
+</html>

@@ -1,0 +1,256 @@
+
+<html>
+<head>
+	   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="./leaflet.timeline.js"></script>
+    <link rel="stylesheet" href="leaflet.css" />
+	<meta charset="utf-8" />
+	<title>Extrude polygons for 3D indoor mapping</title>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+	<link rel="stylesheet" href="leaflet.css" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>N & LW Lawn Care - Landscaping Bootstrap4 HTML5 Responsive Template </title>
+	<!-- Bootstrap core CSS -->
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Fontawesome CSS -->
+	<link href="css/all.css" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+  <script src="./leaflet.timeline.js"></script>
+    <script src="./test1.jsonp"></script>
+    <script src="./test1.jsonp"></script>
+    <script src="NA.js"></script>
+
+   <style>
+        
+      #map {position: relative; margin-left: auto;
+      margin-right: auto;height :400 ; width: 930
+      }
+     
+      #map_dyn_1 {position: relative; margin-left: auto;
+		  margin-right: auto;height :400 ; width: 930}
+      .leaflet-bottom.leaflet-left {
+        width: 100%;
+      }
+      .leaflet-control-container .leaflet-timeline-controls {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        margin-bottom: 15px;
+        .legend {
+    line-height: 18px;
+    color: #555;
+}
+
+
+      }
+    </style>
+</head>
+<body>
+
+
+<!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light top-nav fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="logo" />
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="fas fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link active" href="Maps_dyn.html">Dynamiques</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link " href="Maps_3d.html">3D</a>
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="choro.html">Choroplèthes</a>
+                  </li>
+                  
+                     </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="symb.html">Symboles</a>
+                  </li>
+
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="d3.js.html">D3.js</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                     <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+               </ul>
+            </div>
+        </div>
+    </nav>
+
+  <div class="input-group">
+      <img class="card-img-top" src="images/capture.JPG" alt="Card image Blog" />
+
+               <img class="card-img-top" src="images/rem_dyn.JPG" alt="Card image Blog" />
+
+ 
+ 
+
+    <div id="map"></div>
+
+    <script>
+      function getColorFor(str) {
+        // java String#hashCode
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+          hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        var red = (hash >> 24) & 0xff;
+        var grn = (hash >> 16) & 0xff;
+        var blu = (hash >> 8) & 0xff;
+        return "rgb(" + red + "," + grn + "," + blu + ")";
+      }
+      var osmUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+      var osmAttrib =
+        '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+      var osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib });
+      var map = L.map("map", {
+        layers: [osm],
+        center: new L.LatLng(27.75310345565485, 0.380170173753754),
+        zoom: 4,
+      });
+
+
+
+   L.geoJSON(pays).addTo(map)
+
+
+      var timeline;
+      var timelineControl;
+
+      function onLoadDaata(data) {
+        timeline = L.timeline(data, {
+          pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+              weight: 8,
+              opacity : 0.15,
+              fillColor: '#e74c3c',
+              fillOpacity: 0.8,
+              stroke : true,
+              color: '#e74c3c',
+              radius: getRadius(feature.properties.n_inc)
+            });
+           },
+          waitToUpdateMap: true,
+             waitToUpdatemap: true,
+          onEachFeature: function (feature, layer) {
+            layer.bindTooltip('Nom du pays : ' + feature.properties.NAME + '</p>Date de mesure : ' + feature.properties.start +  '</p>surface des forets brulée (ha) : ' + feature.properties.n_inc );
+          },
+        });
+        timelineControl = L.timelineSliderControl({
+
+          formatOutput: function (date) {
+            return new Date(date).toLocaleDateString();
+          },
+          enableKeyboardControls: true,
+                    duration : 1000
+
+        });
+        timeline.addTo(map);
+        timelineControl.addTo(map);
+        timelineControl.addTimelines(timeline);
+      }
+      function getRadius(covid) {
+        var radius = Math.sqrt(covid)/3;
+        return radius;
+      };
+
+
+
+
+ 
+    </script>
+    <script src="./centroides.jsonp"></script>
+
+
+</script>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="breadcrumb-main">
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+               <a href="index.html">La grandeur de la déforestation exportée en afrique du nord de 2005 à 2013</a>
+            </li>
+         </ol>
+      </div>
+
+      <div class="row">
+         <!-- Blog Entries Column -->
+         <div class="col-md-8 blog-entries">
+           <!-- Blog Post -->
+           <div class="card mb-4">
+          
+            <div class="card-body">
+              <h2 class="card-title">Déscription de la carte</h2>
+              <p class="card-text">Cette carte représente la surface brulée en héctares des forests dans le Maroc et l'Algérie entre 2015 et 2018
+           
+              <p class="card-text">Durée de variation  : 2015-2018 
+          
+
+           <p class="card-text">Source :Incendies de forêt en Europe, au Moyen-Orient et en Afrique du Nord . C'est un rapport qui contient le résumé annuel de la saison des incendies d'une année quelconque avec les chiffres officiels fournis par 31 pays contributeurs pour le nombre d'incendies, les zones brûlées et les efforts de prévention des incendies, ainsi que l'analyse du danger d'incendie et des zones cartographiées dans le système européen d'information sur les incendies de forêt ( EFFIS). 
+
+            <p class="card-text">Web-source : https://ec.europa.eu/jrc/en/publication/forest-fires-europe-milddle-east-and-north-africa + (l'année que vous désirez) 
+
+
+           </p>
+            </div>
+          
+           </div>
+
+          
+
+
+            <div class="pagination_bar_arrow">
+              <!-- Pagination -->
+               <ul class="pagination justify-content-center mb-4">
+                 
+               </ul>
+            </div>
+
+         </div>
+
+         <!-- Sidebar Widgets Column -->
+         <div class="col-md-4 blog-right-side">
+
+           <!-- Search Widget -->
+           <div class="card mb-4">
+            <h5 class="card-header">Légende</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <p class="card-text">Merci de cliquez sur une entitée pour afficher la superficie brulée
+             
+              </div>
+            </div>
+           </div>
+
+          
+
+           
+           </div>
+
+         </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+</body>
+</html>

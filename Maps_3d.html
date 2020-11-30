@@ -1,0 +1,336 @@
+
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Extrude polygons for 3D indoor mapping</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+<link rel="stylesheet" href="leaflet.css" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>N & LW Lawn Care - Landscaping Bootstrap4 HTML5 Responsive Template </title>
+	<!-- Bootstrap core CSS -->
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Fontawesome CSS -->
+	<link href="css/all.css" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+<!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light top-nav fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="logo" />
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="fas fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link " href="Maps_dyn.html">Dynamiques</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link active" href="Maps_3d.html">3D</a>
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="choro.html">Choroplèthes</a>
+                  </li>
+                  
+                     </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="symb.html">Symboles</a>
+                  </li>
+
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="d3.js.html">D3.js</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                     <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+               </ul>
+            </div>
+        </div>
+    </nav>
+  <div class="input-group">
+               <img class="card-img-top" src="images/rem_3d.JPG" alt="Card image Blog" />
+<div id="map"></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoib3Vzc2FtYWphamkiLCJhIjoiY2tocGl5M3ZzMWJnZDJ3bXhuZGpqMGpiaSJ9.EGPxXqgwbwk19tzTpUBuAw';
+var mapddd = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [5.61694, 30.86625],
+zoom: 3,
+pitch: 40,
+bearing: 20,
+antialias: true
+});
+ 
+ mapddd.touchZoomRotate.enable();
+mapddd.touchZoomRotate.enableRotation();
+
+mapddd.on('load', function () {
+mapddd.addSource('floorplan', {
+// GeoJSON Data source used in vector tiles, documented at
+// https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+'type': 'geojson',
+'data':'https://gist.githubusercontent.com/SweetPizzaTo/03bbfc7163921a0fb28ac3449eb2b48e/raw/b5abdfc9a47fc83e568962699d3024130fed4524/m4.geojson'
+});
+mapddd.addLayer({
+'id': 'room-extrusion',
+'type': 'fill-extrusion',
+'source': 'floorplan',
+'paint': {
+// See the Mapbox Style Specification for details on data expressions.
+// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions
+ 
+// Get the fill-extrusion-color from the source 'color' property.
+'fill-extrusion-color': ['get', 'color'],
+ 
+// Get fill-extrusion-height from the source 'height' property.
+'fill-extrusion-height': ['get', 'height'],
+ 
+// Get fill-extrusion-base from the source 'base_height' property.
+'fill-extrusion-base': ['get', 'base_height'],
+ 
+// Make extrusions slightly opaque for see through indoor walls.
+'fill-extrusion-opacity': 0.5
+}
+});
+});
+
+</script>
+    <!-- Page Content -->
+    <div class="container">
+      <div class="breadcrumb-main">
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+               <a href="index.html">Le nombre d'arbres au Maroc, Algérie, Tunésie, Lybie et l'Egypte</a>
+            </li>
+         </ol>
+      </div>
+
+      <div class="row">
+         <!-- Blog Entries Column -->
+         <div class="col-md-8 blog-entries">
+           <!-- Blog Post -->
+           <div class="card mb-4">
+         
+            <div class="card-body">
+              <h2 class="card-title">Déscription de la carte</h2>
+              <p class="card-text">On a utilisé 429 775 mesures au sol de la densité des arbres de tous les continents de la planète à l'exception de l'Antarctique pour générer une carte mondiale des arbres forestiers.
+              Ils définissent un arbre comme une plante aux tiges ligneuses de plus de 10 cm de diamètre à hauteur de poitrine.
+              Plus d'informations visitez le site : https://www.nature.com/articles/nature14967 
+           </p>
+              
+            </div>
+          
+           </div>
+
+          
+
+
+            <div class="pagination_bar_arrow">
+              <!-- Pagination -->
+               <ul class="pagination justify-content-center mb-4">
+                 
+               </ul>
+            </div>
+
+         </div>
+
+         <!-- Sidebar Widgets Column -->
+         <div class="col-md-4 blog-right-side">
+
+           <!-- Search Widget -->
+           <div class="card mb-4">
+            <h5 class="card-header">Légende</h5>
+            <div class="card-body">
+              <div class="input-group">
+               <img class="card-img-top" src="images/leg_3d_1.JPG" alt="Card image Blog" />
+             
+              </div>
+            </div>
+           </div>
+
+          
+
+           
+           </div>
+
+         </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+
+	
+    <div id="mapino"></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoib3Vzc2FtYWphamkiLCJhIjoiY2tocGl5M3ZzMWJnZDJ3bXhuZGpqMGpiaSJ9.EGPxXqgwbwk19tzTpUBuAw';
+var mapino = new mapboxgl.Map({
+container: 'mapino',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [5.61694, 30.86625],
+zoom: 3,
+pitch: 40,
+bearing: 20,
+antialias: true
+});
+ 
+ mapino.touchZoomRotate.enable();
+mapino.touchZoomRotate.enableRotation();
+
+mapino.on('load', function () {
+mapino.addSource('floorplan', {
+// GeoJSON Data source used in vector tiles, documented at
+// https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+'type': 'geojson',
+'data':'https://gist.githubusercontent.com/SweetPizzaTo/0290321cf0fc72d86ec84064d190772a/raw/d74569da47bb6a06fb772bc426fc23d6fa62e608/m8.geojson'
+});
+mapino.addSource('floora', {
+// GeoJSON Data source used in vector tiles, documented at
+// https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+'type': 'geojson',
+'data':'https://gist.githubusercontent.com/SweetPizzaTo/f113178df21de186f986889ff8c84841/raw/d62e7acb63ba9c20fbc9dd793771e1bab0364130/m10.geojson'
+});
+
+mapino.addLayer({
+'id': 'maine',
+'type': 'fill',
+'source': 'floora',
+'layout': {},
+'paint': {
+'fill-color': ['get', 'color'],
+'fill-opacity': 0.8
+}
+});
+mapino.addLayer({
+'id': 'room-extrusion',
+'type': 'fill-extrusion',
+'source': 'floorplan',
+'paint': {
+// See the Mapbox Style Specification for details on data expressions.
+// https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions
+ 
+// Get the fill-extrusion-color from the source 'color' property.
+'fill-extrusion-color': ['get', 'color'],
+ 
+// Get fill-extrusion-height from the source 'height' property.
+'fill-extrusion-height': ['get', 'height'],
+ 
+// Get fill-extrusion-base from the source 'base_height' property.
+'fill-extrusion-base': ['get', 'base_height'],
+ 
+// Make extrusions slightly opaque for see through indoor walls.
+'fill-extrusion-opacity': 1
+}
+});
+
+
+
+mapino.on('click', 'maine', function (e) {
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML('Nom du pays : ' + e.features[0].properties.name +'</p>sensibilité à la désertification : ' + e.features[0].properties.sens + '%' +'</p>Surface des terres cultivées pluviales : ' + e.features[0].properties.surf +  '(x1000 hectares)' +'</p>Surface sensible à la désertification : ' + e.features[0].properties.surf_des + '(x1000 hectares)' )
+.addTo(mapino);
+});
+ 
+// Change the cursor to a pointer when the mouse is over the states layer.
+mapino.on('mouseenter', 'maine', function () {
+mapino.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+mapino.on('mouseleave', 'maine', function () {
+mapino.getCanvas().style.cursor = '';
+});
+
+});
+</script>
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Page Content -->
+    <div class="container">
+      <div class="breadcrumb-main">
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+               <a href="index.html">Estimation du degré de désertification des terres cultivées pluviales dans les pays du Maghreb (1996) </a>
+            </li>
+         </ol>
+      </div>
+
+      <div class="row">
+         <!-- Blog Entries Column -->
+         <div class="col-md-8 blog-entries">
+           <!-- Blog Post -->
+           <div class="card mb-4">
+      
+            <div class="card-body">
+              <h2 class="card-title">Déscription de la carte</h2>
+              <p class="card-text">L'agriculture pluviale est un type d'agriculture qui dépend des précipitations pour l'eau. Il fournit une grande partie de la nourriture consommée par les communautés pauvres des pays en développement.
+               
+           </p>
+            <p class="card-text"> On a représenté le degré de sensiblité des terres agricultures pluviales à la désertification en baguttes 3d et par la choroplèthe ci-dessous.   
+           </p>
+            <p class="card-text"> Source : Calculé à partir du PNUE (1996) et Dregne, H. E. et N-T. Chou., Dimensions et coûts de la désertification mondiale dans la dégradation et la restauration des terres arides. Lubbock: Texas Tech. Université, 1992.   
+           </p>
+           
+              
+            </div>
+          
+           </div>
+
+          
+
+
+            <div class="pagination_bar_arrow">
+              <!-- Pagination -->
+               <ul class="pagination justify-content-center mb-4">
+                 
+               </ul>
+            </div>
+
+         </div>
+
+         <!-- Sidebar Widgets Column -->
+         <div class="col-md-4 blog-right-side">
+
+           <!-- Search Widget -->
+           <div class="card mb-4">
+            <h5 class="card-header">Légende</h5>
+            <div class="card-body">
+              <div class="input-group">
+               <img class="card-img-top" src="images/leg_3d_2.JPG" alt="Card image Blog" />
+             
+              </div>
+            </div>
+           </div>
+
+          
+
+           
+           </div>
+
+         </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+</body>
+</html>

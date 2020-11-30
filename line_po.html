@@ -1,0 +1,74 @@
+<!DOCTYPE html>  
+<html>  
+  
+    <head lang="en">  
+        <meta charset="UTF-8">  
+        <title>Line chart using D3.js and Dimple.js</title>  
+
+
+    
+
+    <h2>Pollution de l'air_l'afrique de nord_2010/20015 </h2> 
+    
+
+
+    </head>  
+  
+    <body>  
+        <div style="width:75%;">
+
+</div>
+        <div id="abhichart"></div>  
+    </body>  
+    <script src="http://d3js.org/d3.v3.js"></script>  
+    <script src="http://dimplejs.org/dist/dimple.v2.1.2.min.js"></script>  
+    <script>  
+    var svg = dimple.newSvg("#abhichart", 1500, 500),  
+        chart = null,  
+        s1 = null,  
+        s2 = null,  
+        x = null,  
+        y1 = null,  
+        y2 = null,  
+        data = [{  
+            "country": "MAROC",  
+            "ANNEE2010": 8100,  
+            "Year 2013": 2010,  
+            "ANNEE2015": 9800,  
+            "Year 2014": 2015  
+        }, {  
+            "country": "ALGERIE",  
+            "ANNEE2010": 88000,  
+            "Year 2013": 2010,  
+            "ANNEE2015": 12000,  
+            "Year 2014": 2015  
+        }, {  
+            "country": "LYBIE",  
+            "ANNEE2010": 20000,  
+            "Year 2013": 2010,  
+            "ANNEE2015": 2600,  
+            "Year 2014": 2015  
+        }, {  
+            "country": "TUNISIE",  
+            "ANNEE2010": 3600,  
+            "Year 2013": 2010,  
+            "ANNEE2015": 4500,  
+            "Year 2014": 2015  
+        }, {  
+            "country": "EGYPTE",  
+            "ANNEE2010": 57400,  
+            "Year 2013": 2010,  
+            "ANNEE2015": 60200,  
+            "Year 2014": 2015  
+        }];  
+    chart = new dimple.chart(svg, data);  
+    x = chart.addCategoryAxis("x", "country");  
+    y1 = chart.addMeasureAxis("y", "ANNEE2010");  
+    y2 = chart.addMeasureAxis("y", "ANNEE2015");  
+    s1 = chart.addSeries("Year 2013", dimple.plot.line, [x, y1]);  
+    s2 = chart.addSeries("Year 2014", dimple.plot.line, [x, y2]);  
+    chart.addColorAxis("ANNEE2010", ["green", "yellow", "red"]);  
+    chart.draw();  
+    </script>  
+  
+</html> 

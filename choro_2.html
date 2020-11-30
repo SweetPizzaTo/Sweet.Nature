@@ -1,0 +1,341 @@
+
+<html>
+<head>
+	   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="./leaflet.timeline.js"></script>
+    <link rel="stylesheet" href="leaflet.css" />
+	<meta charset="utf-8" />
+	<title>Extrude polygons for 3D indoor mapping</title>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+	<link rel="stylesheet" href="leaflet.css" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>N & LW Lawn Care - Landscaping Bootstrap4 HTML5 Responsive Template </title>
+	<!-- Bootstrap core CSS -->
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Fontawesome CSS -->
+	<link href="css/all.css" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link href="css/style.css" rel="stylesheet">
+  <script src="./leaflet.timeline.js"></script>
+    <script src="./test1.jsonp"></script>
+<link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+
+   <style>
+      
+     #map_choro_1{
+      width: 900;
+      height: 500;
+      position : relative;
+      margin-right:  auto;
+      margin-left: auto }
+        #Texte{position: absolute; top: 0%; right: 0px; width: 30%; height: 10%;}
+        #container1{position: absolute; top: 10%; right: 0px; width: 30%; height: 45%; }
+        #container2{position: absolute; top: 55%; right: 0px; width: 30%; height: 45%;}
+
+        .info {
+            padding: 5px 5px;
+            font: 13px/24px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255,255,255,8);
+            box-shadow: 0 0 10px rgb(85, 168, 244);
+            border-radius: 3px;
+            top  : 50;
+        }
+        .info h4 {
+            margin: 0 0 1px;
+            color: #4895f2;
+        }
+        .legend {
+            line-height: 20px;
+            color: #555;
+            top : 1;
+        }
+        .legend i {
+            width: 50px;
+            height:18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 1;
+        }
+
+        #map_choro_des {
+      width: 900;
+      height: 500;
+      position : relative;
+      margin-right:  auto;
+      margin-left: auto
+    }
+    .info_choro_dese {
+        padding: 6px 8px;
+        font: 14px/16px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+    .info_choro_dese h4 {
+        margin: 0 0 5px;
+        color: #777;
+    }
+    .legend_map_choro_des {
+    line-height: 18px;
+    color: #555;
+}
+.legend_map_choro_des i {
+    width: 17px;
+    height: 17px;
+    float: left;
+    margin-right: 10px;
+    opacity: 0.7;
+}
+table, th, td {
+  border: 1px solid black;
+}
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light top-nav fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="logo" />
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="fas fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="index.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link " href="Maps_dyn.html">Dynamiques</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link " href="Maps_3d.html">3D</a>
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link active " href="choro.html">Choroplèthes</a>
+                  </li>
+                  
+                     </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="symb.html">Symboles</a>
+                  </li>
+
+                  </li>
+                     <li class="nav-item">
+                     <a class="nav-link " href="d3.js.html">D3.js</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                     <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+               </ul>
+            </div>
+        </div>
+    </nav>
+
+  
+<div class="input-group">
+               <img class="card-img-top" src="images/drought_il.png" alt="Card image Blog" />
+<div id='map_choro_des'></div>
+
+<script type="text/javascript" src="sensibilit.geojson"></script>
+
+<script type="text/javascript">
+
+  var map_choro_des = L.map('map_choro_des').setView([30.224604, -8.004818], 5  );
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetmap</a> contributors'
+  }).addTo(map_choro_des);
+  
+  function getColor(totalcas) {
+    return totalcas > 20 ? '#a63603' :
+         totalcas > 15 ? '#e6550d' :
+         totalcas > 10 ? '#fd8d3c' :
+         totalcas > 5? '#fdbe85' :
+              '#feedde';
+  }
+  function Monstyle(feature) {
+    return {
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7,
+      fillColor: getColor(feature.properties.sens)
+    };
+  }
+
+  function highlightFeature(e) {
+      var layer = e.target;
+
+      layer.setStyle({
+          weight: 5,
+          color: '#666',
+          dashArray: '',
+          fillOpacity: 0.7
+      });
+
+      if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+          layer.bringToFront();
+      }
+          info_choro_dese.update(layer.feature.properties);
+
+  }
+
+  function resetHighlight(e) {
+      geojson.resetStyle(e.target);
+          info_choro_dese.update();
+
+  }
+  function zoomToFeature(e) {
+    map_choro_des.fitBounds(e.target.getBounds());
+}
+  function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
+var info_choro_dese = L.control();
+
+info_choro_dese.onAdd = function (map_choro_des) {
+    this._div = L.DomUtil.create('div', 'info_choro_dese'); // create a div with a class "info_choro_dese"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info_choro_dese.update = function (props) {
+    this._div.innerHTML = '<h4>info sur la zone sélectionnée</h4>' +  (props ?
+        'Identificateur de la zone : <b>' + props.id + '</b> <br />Degré de sensibilité:' + props.sens + '%' + '</sup>'
+        : 'Merci de mettre le cursuer sur la region');
+};
+
+info_choro_dese.addTo(map_choro_des);
+
+  var geojson = L.geoJson(mes, {
+    style: Monstyle,
+    onEachFeature: onEachFeature,
+}).addTo(map_choro_des);
+var legend_map_choro_des = L.control({position: 'bottomright'});
+
+legend_map_choro_des.onAdd = function (map_choro_des) {
+
+    var div = L.DomUtil.create('div', 'info_choro_dese legend_map_choro_des'),
+        grades = [0, 5, 10, 15, 20],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    div.innerHTML += '<h6>En pourcentage(%)' +'<br>' +' La sensibilit à la désertification </h6>';
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML += 
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+legend_map_choro_des.addTo(map_choro_des);
+     
+
+        // var overlaymap_choro_dess = {
+        //     "geojson": geojson,
+        //  };
+
+        // //var control = L.control.layers(basemap_choro_dess, overlaymap_choro_dess)
+        // var control = L.control.selectLayers(  overlaymap_choro_dess)
+        // control.addTo(map_choro_des);
+
+
+</script>
+          
+    </div>
+
+
+  <div class="container">
+
+    <h7 class="card-header" style = " background-color: transparent;bord" >Carte de sensibilité forte à la désertification
+et à la dégradation des terres</h7>
+            <div class="card-body">
+             
+              <p class="card-text">L’élaboration de la carte des zones homogènes et celle de l’indice de sensibilité forte à la désertification s’est basée sur un ensemble de données géo-spatiales et géoréférencées organisées dans une base de données. À cet effet, un ensemble de cartes élaborées à l’échelle nationale ont été utilisées. Elles comprennent :
+              <ol>
+              <li>Le Modèle Numérique de Terrain (MNT)</li>
+              <li>La carte des sols </li>
+              <li>Carte bioclimatique</li>
+              </ol>
+              <p class="card-text">La carte des zones homogènes est alors obtenue par superposition des cartes du relief, des sols et du bioclimat, en considérant les limites des provinces comme fond pour ces zones. L’occupation des sols a été utilisée en dernier lieu pour vérifier la compatibilité et décider de la zone homogène à considérer. Le résultat donne lieu à 8 ensembles homogènes, par référence aux critères considérés, qui sont décrites dans la carte 1. Les superficies respectives de ces zones ainsi que leurs limites géographiques sont décrites dans le tableau ci-dessous.
+        <div class="services-bar">
+            <h1 class="my-4">Superficie et territoires administratifs des 8 zones homogènes </h1>
+            <!-- Services Section -->
+            <div class="row">
+            </div>
+            <table style="height : 80%;width :94%; margin-left: auto; margin-right: auto;">
+            <tbody>
+            <tr>
+            <td>Zone homog&egrave;ne&nbsp;</td>
+            <td>&nbsp;Superficie (ha) et (%)</td>
+            <td>&nbsp;Territoires concern&eacute;s</td>
+            </tr>
+            <tr>
+            <td>&nbsp;1</td>
+            <td>&nbsp;32 153 080 (46, 5%)</td>
+            <td>&nbsp;Ouad Eddahab, Boujdour, Smara, La&acirc;youne, Assa -Zag, Tan-Tan, Guelmim Sud</td>
+            </tr>
+            <tr>
+            <td>&nbsp;2</td>
+            <td>&nbsp;11 000 193 (15,9%))</td>
+            <td>&nbsp;Guelmim Nord, Tata, Errachidia Sud, Figuig Sud, Ouarzazate Sud, Zagora</td>
+            </tr>
+            <tr>
+            <td>&nbsp;3</td>
+            <td>&nbsp;3 437 004 (5%)</td>
+            <td>&nbsp;Tiznit, Chtouka-Ait Baha, Inezegane-Ait Melloul, Agadir-Ida ou Tanane, Essaouira<br />Taroudant Sud, Chichaoua, Marrakech</td>
+            </tr>
+            <tr>
+            <td>&nbsp;4</td>
+            <td>&nbsp;6 657 131 (9,6%)</td>
+            <td>&nbsp;Azilal, Kh&eacute;nifra, Ifrane, Sefrou, Taroudant Nord, B&eacute;ni Mellal, Ouarzazate Nord, Errachidia<br />Nord</td>
+            </tr>
+            <tr>
+            <td>&nbsp;5</td>
+            <td>&nbsp;3 921 628 (5, 7%)</td>
+            <td>&nbsp;Benguerir, Settat, Safi, El Jadida, Khouribga, El Kel&acirc;a Sraghna</td>
+            </tr>
+            <tr>
+            <td>&nbsp;6</td>
+            <td>&nbsp;7 062 472 (10, 2%)</td>
+            <td>&nbsp;Oujda-Angad, Nador, Taza, Boulemane, Figuig Nord, Berkane, Taourirt, Jerada,<br />Alhoceima Est</td>
+            </tr>
+            <tr>
+            <td>&nbsp;7</td>
+            <td>&nbsp;3 707 159 (5,4%)</td>
+            <td>&nbsp;Casablanca, Benslimane, Mohammedia, Skhirate-T&eacute;mara, Rabat, Sal&eacute;, K&eacute;nitra,<br />Khemisset, Sidi Kacem, Mekn&egrave;s, El Hajeb, F&egrave;s, Taounate, Larache, Tanger</td>
+            </tr>
+            <tr>
+            <td>&nbsp;8</td>
+            <td>&nbsp;1 142 306 (1,7%)</td>
+            <td>&nbsp;T&eacute;touan, Chefchaouen, Alhoceima Ouest, Tanger-Fahs</td>
+            </tr>
+            </tbody>
+            </table>
+
+             
+              </div>
+
+
+
+
+
+</body>
+</html>

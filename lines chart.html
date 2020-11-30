@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+   <head>
+
+        <meta charset="UTF-8">  
+        <title>Line chart using D3.js and Dimple.js</title>  
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    </head>  
+      
+
+     </body>
+
+
+
+<div style="width:75%;">
+<canvas id="myChart"></canvas>
+</div>
+<script>
+
+
+Chart.defaults.global.title.display=true;
+
+Chart.defaults.global.title.text= "DEFORESTATION 2005-2013 ";
+
+
+    </script>
+
+<script>
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'],
+
+datasets: [{
+                    label: 'MAROC',
+                
+                    data: [8730, 7050, 5550.430, 6599.2592, 8522.95, 7620.72, 9218.12,12117.75,7946.45],
+                     borderColor: 'rgb(18, 2, 12)',
+                     backgroundColor: 'rgb(18, 2, 12)',
+        
+                    fill: false,
+                }, {
+                   
+
+
+
+
+                    label: 'ALGERIE',
+                    fill: false,
+                    
+
+                    data: [21069.140, 19388.28, 18783.49, 20581.58, 24779.08, 21146.21, 23678.96,28219.41,25960.200],
+                     borderColor: 'rgb(366, 25, 132)',
+                    backgroundColor: 'rgb(366, 25, 132)',
+       
+           },{
+                   
+
+
+
+
+                    label: 'TUNISIE',
+                    fill: false,
+                    
+
+                    data: [2863.003, 3098.515, 3754.693, 4269.405, 3928.5857, 3097.320, 4881.628,7171.105,5625.965],
+                      borderColor: 'rgb(25, 98, 32)',
+                      backgroundColor: 'rgb(25, 98, 32)',
+       
+           },{
+                   
+
+
+
+
+                    label: 'LYBIE',
+                    fill: false,
+                    
+
+                    data: [3438.079, 4000.957, 3375.2238, 4451.019, 3893.358, 4126.003, 1905.0005,4657.752,3435.659],
+                     borderColor: 'rgb(0, 255, 255)',
+                    backgroundColor: 'rgb(0, 255, 255)',
+       
+           },{
+                   
+
+
+
+
+                    label: 'EGYPTE',
+                    fill: false,
+                    
+
+                    data: [33437.6256, 43098.7122, 33077.4209, 24503.179, 12183.7403,37509.3497, 29004.3862,42300.6679, 41220.555],
+                     borderColor: 'rgb(223, 109, 20)',
+                    backgroundColor: 'rgb(223, 109, 20)',
+       
+           }]
+
+
+},
+
+
+});
+
+
+
+      	 </script>
+   </body>
+</html>
